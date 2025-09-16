@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { UserProvider } from "@/lib/contexts/UserContext";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/lib/providers/ThemeProviver";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,14 +31,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${plusJakartaSans.variable} antialiased dark`}
+        className={`${geistSans.variable} ${geistMono.variable} ${plusJakartaSans.variable} antialiased`}
       >
-        <UserProvider>
-          {children}
-          <Toaster />
-        </UserProvider>
+        <ThemeProvider>
+          <UserProvider>
+            {children}
+            <Toaster />
+          </UserProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

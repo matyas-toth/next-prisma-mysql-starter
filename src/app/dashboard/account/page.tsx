@@ -9,8 +9,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
+import { useTheme } from '@/lib/providers/ThemeProviver';
+
+import lightModeThumbnail from '@/../public/img/themes/light.png';
+import darkModeThumbnail from '@/../public/img/themes/dark.png';
+import oledModeThumbnail from '@/../public/img/themes/oled.png';
 
 export default function AccountPage() {
+
+  const { theme, setTheme } = useTheme();
+
   const { user, updateUser } = useUser();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -197,7 +205,7 @@ export default function AccountPage() {
 
   return (
     <div className="p-8 space-y-8">
-      <div className="max-w-4xl mx-auto">
+      <div className=" mx-auto">
         <div className="space-y-2 mb-4">
           <h1 className="text-3xl font-bold tracking-tight">Account Settings</h1>
           <p className="text-muted-foreground">
@@ -206,6 +214,28 @@ export default function AccountPage() {
         </div>
 
         <div className="space-y-8">
+        <Card>
+            <CardHeader>
+              <CardTitle>Theme</CardTitle>
+              <CardDescription>
+                Update your theme settings.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className='grid grid-cols-1 xl:grid-cols-3 grid-rows-3 xl:grid-rows-1 gap-4'>
+              <div className='flex flex-col items-start justify-center rounded-md overflow-hidden cursor-pointer' onClick={() => setTheme('light')}>
+                <img src={lightModeThumbnail.src} alt='Light Mode' className='w-full h-48 object-cover' />
+                
+              </div>
+              <div className='flex flex-col items-start justify-center rounded-md overflow-hidden cursor-pointer' onClick={() => setTheme('dark')}>
+                <img src={darkModeThumbnail.src} alt='Light Mode' className='w-full h-48 object-cover' />
+                
+              </div>
+              <div className='flex flex-col items-start justify-center rounded-md overflow-hidden cursor-pointer' onClick={() => setTheme('oled')}>
+                <img src={oledModeThumbnail.src} alt='Light Mode' className='w-full h-48 object-cover' />
+                
+              </div>
+            </CardContent>
+          </Card>
           {/* Profile Information */}
           <Card>
             <CardHeader>
