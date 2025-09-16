@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { requireAuthUser } from '@/lib/server-auth';
 import { verifyPassword, hashPassword, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
@@ -11,6 +11,8 @@ export async function PUT(request: NextRequest) {
     if (!currentPassword || !newPassword) {
       return createErrorResponse('Current password and new password are required');
     }
+
+    const prisma = await getPrisma();
 
     // Get user's current password hash
     const userData = await prisma.user.findUnique({

@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { hashPassword, generateToken, sanitizeUser, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
@@ -10,6 +10,8 @@ export async function POST(request: NextRequest) {
     if (!email || !password || !username) {
       return createErrorResponse('Email, username, and password are required');
     }
+
+    const prisma = await getPrisma();
 
     // Check if user already exists
     const existingUser = await prisma.user.findFirst({

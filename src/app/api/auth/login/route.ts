@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { verifyPassword, generateToken, sanitizeUser, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
@@ -10,6 +10,8 @@ export async function POST(request: NextRequest) {
     if (!emailOrUsername || !password) {
       return createErrorResponse('Email/username and password are required');
     }
+
+    const prisma = await getPrisma();
 
     // Find user by email or username
     const user = await prisma.user.findFirst({

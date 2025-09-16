@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { getAuthUser } from '@/lib/server-auth';
 import { sanitizeUser, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
@@ -10,6 +10,8 @@ export async function GET(request: NextRequest) {
     if (!authUser) {
       return createErrorResponse('Authentication required', 401);
     }
+
+    const prisma = await getPrisma();
 
     // Fetch full user data from database
     const user = await prisma.user.findUnique({

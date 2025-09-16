@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { requireAuthUser } from '@/lib/server-auth';
 import { generate2FASecret, generate2FAQRCode, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
@@ -10,6 +10,8 @@ export async function POST(request: NextRequest) {
     // Generate new 2FA secret
     const secret = generate2FASecret();
     const qrCode = await generate2FAQRCode(secret, user.email);
+    
+    const prisma = await getPrisma();
 
     // Update user with new secret (but don't enable 2FA yet)
     await prisma.user.update({

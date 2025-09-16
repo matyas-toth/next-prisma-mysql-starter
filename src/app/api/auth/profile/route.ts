@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { requireAuthUser } from '@/lib/server-auth';
 import { sanitizeUser, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
@@ -7,6 +7,8 @@ export async function PUT(request: NextRequest) {
   try {
     const user = await requireAuthUser(request);
     const { fullName } = await request.json();
+
+    const prisma = await getPrisma();
 
     // Update user profile (username cannot be changed)
     const updatedUser = await prisma.user.update({

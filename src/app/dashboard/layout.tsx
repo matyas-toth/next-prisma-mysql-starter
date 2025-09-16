@@ -4,6 +4,8 @@ import { useUser } from '@/lib/contexts/UserContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
+import { Loader, Loader2, LoaderPinwheel } from 'lucide-react';
+import { useTheme } from '@/lib/providers/ThemeProviver';
 
 export default function DashboardLayout({
   children,
@@ -12,6 +14,7 @@ export default function DashboardLayout({
 }) {
   const { user, loading } = useUser();
   const router = useRouter();
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -23,8 +26,8 @@ export default function DashboardLayout({
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <Loader2 style={{ color: theme === 'light' ? '#555555' : 'white' }} className={` mx-auto animate-spin`} strokeWidth={1.5} size={64} />
+          <p className="mt-4 text-zinc-600 dark:text-zinc-400 oled:text-zinc-400">Loading...</p>
         </div>
       </div>
     );

@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { redirect } from 'next/navigation';
 import { OAuth2Client } from 'google-auth-library';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { generateToken, sanitizeUser } from '@/lib/auth';
 
 const client = new OAuth2Client(
@@ -26,6 +26,8 @@ export async function GET(request: NextRequest) {
 
   let user;
   let token;
+
+  const prisma = await getPrisma();
 
   try {
     // Exchange code for tokens

@@ -14,6 +14,7 @@ import { useTheme } from '@/lib/providers/ThemeProviver';
 import lightModeThumbnail from '@/../public/img/themes/light.png';
 import darkModeThumbnail from '@/../public/img/themes/dark.png';
 import oledModeThumbnail from '@/../public/img/themes/oled.png';
+import { CheckIcon } from 'lucide-react';
 
 export default function AccountPage() {
 
@@ -222,17 +223,23 @@ export default function AccountPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className='grid grid-cols-1 xl:grid-cols-3 grid-rows-3 xl:grid-rows-1 gap-4'>
-              <div className='flex flex-col items-start justify-center rounded-md overflow-hidden cursor-pointer' onClick={() => setTheme('light')}>
+              <div className={`flex relative flex-col items-start justify-center rounded-md overflow-hidden cursor-pointer transition-all duration-300`} onClick={() => setTheme('light')}>
                 <img src={lightModeThumbnail.src} alt='Light Mode' className='w-full h-48 object-cover' />
-                
+                <div className={`absolute  left-4 w-14 h-14 bg-primary text-white flex items-center justify-center rounded-sm transition-all duration-500 ease-in-out ${theme === 'light' ? 'bottom-4' : '-bottom-14'}`}>
+                  <CheckIcon className='w-6 h-6' />
+                </div>
               </div>
-              <div className='flex flex-col items-start justify-center rounded-md overflow-hidden cursor-pointer' onClick={() => setTheme('dark')}>
+              <div className='flex relative flex-col items-start justify-center rounded-md overflow-hidden cursor-pointer' onClick={() => setTheme('dark')}>
                 <img src={darkModeThumbnail.src} alt='Light Mode' className='w-full h-48 object-cover' />
-                
+                <div className={`absolute  left-4 w-14 h-14 bg-primary text-white flex items-center justify-center rounded-sm transition-all duration-500 ease-in-out ${theme === 'dark' ? 'bottom-4' : '-bottom-14'}`}>
+                  <CheckIcon className='w-6 h-6' />
+                </div>
               </div>
-              <div className='flex flex-col items-start justify-center rounded-md overflow-hidden cursor-pointer' onClick={() => setTheme('oled')}>
+              <div className='flex relative flex-col items-start justify-center rounded-md overflow-hidden cursor-pointer' onClick={() => setTheme('oled')}>
                 <img src={oledModeThumbnail.src} alt='Light Mode' className='w-full h-48 object-cover' />
-                
+                <div className={`absolute  left-4 w-14 h-14 bg-primary text-white flex items-center justify-center rounded-sm transition-all duration-500 ease-in-out ${theme === 'oled' ? 'bottom-4' : '-bottom-14'}`}>
+                  <CheckIcon className='w-6 h-6' />
+                </div>
               </div>
             </CardContent>
           </Card>

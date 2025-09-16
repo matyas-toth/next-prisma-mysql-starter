@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { OAuth2Client } from 'google-auth-library';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { generateToken, sanitizeUser, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -12,6 +12,8 @@ export async function POST(request: NextRequest) {
     if (!idToken) {
       return createErrorResponse('ID token is required');
     }
+
+    const prisma = await getPrisma();
 
     // Verify the Google ID token
     const ticket = await client.verifyIdToken({

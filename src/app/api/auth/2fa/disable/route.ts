@@ -1,11 +1,13 @@
 import { NextRequest } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { requireAuthUser } from '@/lib/server-auth';
 import { createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
     const user = await requireAuthUser(request);
+
+    const prisma = await getPrisma();
 
     // Disable 2FA
     await prisma.user.update({

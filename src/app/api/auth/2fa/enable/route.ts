@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { requireAuthUser } from '@/lib/server-auth';
 import { verify2FAToken, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
@@ -11,6 +11,8 @@ export async function POST(request: NextRequest) {
     if (!token) {
       return createErrorResponse('2FA token is required');
     }
+
+    const prisma = await getPrisma();
 
     // Get user's 2FA secret
     const userData = await prisma.user.findUnique({

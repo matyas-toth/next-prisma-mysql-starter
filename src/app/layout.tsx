@@ -4,6 +4,7 @@ import "./globals.css";
 import { UserProvider } from "@/lib/contexts/UserContext";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/lib/providers/ThemeProviver";
+import { cookies } from "next/headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,15 +26,18 @@ export const metadata: Metadata = {
   description: "A complete starter kit with authentication, database, and dashboard.",
 };
 
+const cookieStore = await cookies()
+const theme = cookieStore.get('theme')?.value || 'light'
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="">
+    <html lang="en" className={theme}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${plusJakartaSans.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${plusJakartaSans.variable} antialiased` + theme}
       >
         <ThemeProvider>
           <UserProvider>

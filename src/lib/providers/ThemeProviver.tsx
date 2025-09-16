@@ -1,6 +1,7 @@
 // components/theme-provider.tsx
 'use client'
 
+import { cookies } from 'next/headers'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 type Theme = 'light' | 'dark' | 'oled'
@@ -30,6 +31,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     setThemeState(newTheme)
     applyThemeToHtml(newTheme)
     localStorage.setItem('theme', newTheme)
+    window.document.cookie = `theme=${newTheme}; path=/`
   }
 
   // Helper to apply correct className
